@@ -58,8 +58,8 @@ screenGui.Parent = game.CoreGui
 screenGui.DisplayOrder = 100
 
 textLabel.Parent = screenGui
-textLabel.Size = UDim2.new(0, 300, 0, 35) -- Kích thước nhỏ gọn
-textLabel.Position = UDim2.new(0, 50, 0, 60) -- Điều chỉnh để nằm bên trái
+textLabel.Size = UDim2.new(0, 300, 0, 30) -- Kích thước nhỏ gọn
+textLabel.Position = UDim2.new(0, 50, 0, 63) -- Điều chỉnh để nằm bên trái
 textLabel.Font = Enum.Font.FredokaOne
 textLabel.TextScaled = true
 textLabel.BackgroundTransparency = 1 -- Nền trong suốt
