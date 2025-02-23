@@ -1,52 +1,23 @@
-for i, v in next, workspace:GetDescendants() do
+for i,v in next, workspace:GetDescendants() do
     pcall(function()
-        if v:IsA("BasePart") then
-            v.Transparency = 1
-        elseif v:IsA("Sound") then
-            v:Destroy()
-        elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
-            v:Destroy()
+        v.Transparency = 1
+    end)
+end
+for i,v in next, getnilinstances() do
+    pcall(function()
+        v.Transparency = 1
+        for i1,v1 in next, v:GetDescendants() do
+            v1.Transparency = 1
         end
     end)
 end
-
-for i, v in next, getnilinstances() do
+a = workspace
+a.DescendantAdded:Connect(function(v)
     pcall(function()
-        if v:IsA("BasePart") then
-            v.Transparency = 1
-        elseif v:IsA("Sound") then
-            v:Destroy()
-        elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
-            v:Destroy()
-        end
-
-        for i1, v1 in next, v:GetDescendants() do
-            pcall(function()
-                if v1:IsA("BasePart") then
-                    v1.Transparency = 1
-                elseif v1:IsA("Sound") then
-                    v1:Destroy()
-                elseif v1:IsA("ParticleEmitter") or v1:IsA("Trail") then
-                    v1:Destroy()
-                end
-            end)
-        end
-    end)
-end
-
-workspace.DescendantAdded:Connect(function(v)
-    pcall(function()
-        if v:IsA("BasePart") then
-            v.Transparency = 1
-        elseif v:IsA("Sound") then
-            v:Destroy()
-        elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
-            v:Destroy()
-        end
+        v.Transparency = 1
     end)
 end)
-
-wait(0.3)
+wait(.3)
 local RunService = game:GetService("RunService")
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
