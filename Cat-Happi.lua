@@ -59,7 +59,7 @@ RunService.RenderStepped:Connect(function()
         frameCount = 0
         lastUpdate = now
 
-        -- Ẩn 3 ký tự đầu tiên của tên tài khoản
+        -- Ẩn 4 ký tự đầu tiên của tên tài khoản
         local userName = LocalPlayer.Name
         local hiddenName = string.rep("*", 4) .. string.sub(userName, 5)
 
