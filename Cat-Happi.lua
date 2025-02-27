@@ -38,7 +38,7 @@ textLabel.TextStrokeTransparency = 0 -- Viền chữ rõ ràng hơn
 textLabel.TextColor3 = Color3.new(1, 1, 1) -- Màu chữ trắng
 
 local function rainbowColor()
-     local HuysHappi = 0
+    local HuysHappi = 0
     while true do
         HuysHappi = HuysHappi + 0.01
         if HuysHappi > 1 then HuysHappi = 0 end
@@ -59,9 +59,11 @@ RunService.RenderStepped:Connect(function()
         frameCount = 0
         lastUpdate = now
 
-        -- Hiển thị tên tài khoản Roblox kèm FPS
+        -- Ẩn 3 ký tự đầu tiên của tên tài khoản
         local userName = LocalPlayer.Name
-        textLabel.Text = string.format("%s, FPS: %d", userName, math.floor(fps))
+        local hiddenName = string.rep("*", 4) .. string.sub(userName, 5)
+
+        textLabel.Text = string.format("%s, FPS: %d", hiddenName, math.floor(fps))
     end
 end)
 
