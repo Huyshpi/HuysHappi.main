@@ -81,7 +81,7 @@ RunService.RenderStepped:Connect(function()
         local ping = Stats.Network and Stats.Network.ServerStatsItem and Stats.Network.ServerStatsItem["Data Ping"] and Stats.Network.ServerStatsItem["Data Ping"]:GetValue() or 0
 
         -- Cập nhật văn bản
-        fpsLabel.Text = string.format("%s, FPS  🚀: %d", hiddenName, math.floor(fps))
+        fpsLabel.Text = string.format("%s, 🚀 FPS: %d", hiddenName, math.floor(fps))
         pingLabel.Text = string.format("🎮 Ping: %dms", math.floor(ping))
     end
 end)
