@@ -33,7 +33,7 @@ screenGui.DisplayOrder = 100
 -- FPS & Username Label
 fpsLabel.Parent = screenGui
 fpsLabel.Size = UDim2.new(0, 300, 0, 30)
-fpsLabel.Position = UDim2.new(0, 70, 0, 63) -- Điều chỉnh vị trí
+fpsLabel.Position = UDim2.new(0, 50, 0, 63) -- Điều chỉnh vị trí
 fpsLabel.Font = Enum.Font.FredokaOne
 fpsLabel.TextScaled = true
 fpsLabel.BackgroundTransparency = 1
@@ -81,7 +81,7 @@ RunService.RenderStepped:Connect(function()
         local ping = Stats.Network and Stats.Network.ServerStatsItem and Stats.Network.ServerStatsItem["Data Ping"] and Stats.Network.ServerStatsItem["Data Ping"]:GetValue() or 0
 
         -- Cập nhật văn bản
-        fpsLabel.Text = string.format("%s,🚀 FPS: %d", hiddenName, math.floor(fps))
+        fpsLabel.Text = string.format("%s, FPS: %d", hiddenName, math.floor(fps))
         pingLabel.Text = string.format("🎮 Ping: %dms", math.floor(ping))
     end
 end)
