@@ -21,28 +21,42 @@ wait(.3)
 local RunService = game:GetService("RunService")
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
+local Stats = game:GetService("Stats")
 
 local screenGui = Instance.new("ScreenGui")
-local textLabel = Instance.new("TextLabel")
+local fpsLabel = Instance.new("TextLabel")
+local pingLabel = Instance.new("TextLabel")
 
 screenGui.Parent = game.CoreGui
 screenGui.DisplayOrder = 100
 
-textLabel.Parent = screenGui
-textLabel.Size = UDim2.new(0, 300, 0, 30) -- Kích thước nhỏ gọn
-textLabel.Position = UDim2.new(0, 50, 0, 63) -- Điều chỉnh để nằm bên trái
-textLabel.Font = Enum.Font.FredokaOne
-textLabel.TextScaled = true
-textLabel.BackgroundTransparency = 1 -- Nền trong suốt
-textLabel.TextStrokeTransparency = 0 -- Viền chữ rõ ràng hơn
-textLabel.TextColor3 = Color3.new(1, 1, 1) -- Màu chữ trắng
+-- FPS & Username Label
+fpsLabel.Parent = screenGui
+fpsLabel.Size = UDim2.new(0, 300, 0, 30)
+fpsLabel.Position = UDim2.new(0, 50, 0, 63) -- Điều chỉnh vị trí
+fpsLabel.Font = Enum.Font.FredokaOne
+fpsLabel.TextScaled = true
+fpsLabel.BackgroundTransparency = 1
+fpsLabel.TextStrokeTransparency = 0
+fpsLabel.TextColor3 = Color3.new(1, 1, 1)
+
+-- Ping Label (Có thể chỉnh vị trí riêng)
+pingLabel.Parent = screenGui
+pingLabel.Size = UDim2.new(0, 463, 0, 30)
+pingLabel.Position = UDim2.new(0, 50, 0, 83) -- Điều chỉnh vị trí Ping tại đây
+pingLabel.Font = Enum.Font.FredokaOne
+pingLabel.TextScaled = true
+pingLabel.BackgroundTransparency = 1
+pingLabel.TextStrokeTransparency = 0
+pingLabel.TextColor3 = Color3.new(1, 1, 1)
 
 local function rainbowColor()
     local HuysHappi = 0
     while true do
         HuysHappi = HuysHappi + 0.01
         if HuysHappi > 1 then HuysHappi = 0 end
-        textLabel.TextColor3 = Color3.fromHSV(HuysHappi, 1, 1) -- Màu chữ đổi liên tục
+        fpsLabel.TextColor3 = Color3.fromHSV(HuysHappi, 1, 1)
+        pingLabel.TextColor3 = Color3.fromHSV(HuysHappi, 1, 1) -- Ping cũng đổi màu
         RunService.RenderStepped:Wait()
     end
 end
@@ -63,7 +77,12 @@ RunService.RenderStepped:Connect(function()
         local userName = LocalPlayer.Name
         local hiddenName = string.rep("*", 4) .. string.sub(userName, 5)
 
-        textLabel.Text = string.format("%s, FPS: %d", hiddenName, math.floor(fps))
+        -- Lấy giá trị Ping
+        local ping = Stats.Network and Stats.Network.ServerStatsItem and Stats.Network.ServerStatsItem["Data Ping"] and Stats.Network.ServerStatsItem["Data Ping"]:GetValue() or 0
+
+        -- Cập nhật văn bản
+        fpsLabel.Text = string.format("%s, FPS: %d", hiddenName, math.floor(fps))
+        pingLabel.Text = string.format("Ping: %dms", math.floor(ping))
     end
 end)
 
