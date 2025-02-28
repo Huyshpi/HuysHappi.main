@@ -22,41 +22,77 @@ local RunService = game:GetService("RunService")
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 local Stats = game:GetService("Stats")
+local UserInputService = game:GetService("UserInputService")
 
 local screenGui = Instance.new("ScreenGui")
 local fpsLabel = Instance.new("TextLabel")
 local pingLabel = Instance.new("TextLabel")
+local toggleButton = Instance.new("TextButton")
+
+local isVisible = true
 
 screenGui.Parent = game.CoreGui
 screenGui.DisplayOrder = 100
 
--- FPS & Username Label
+-- FPS Label
 fpsLabel.Parent = screenGui
 fpsLabel.Size = UDim2.new(0, 300, 0, 30)
-fpsLabel.Position = UDim2.new(0, 50, 0, 54) -- Điều chỉnh vị trí
+fpsLabel.Position = UDim2.new(0, 72, 0, 56)
 fpsLabel.Font = Enum.Font.FredokaOne
 fpsLabel.TextScaled = true
 fpsLabel.BackgroundTransparency = 1
-fpsLabel.TextStrokeTransparency = 0
+fpsLabel.TextStrokeTransparency = 0.3
 fpsLabel.TextColor3 = Color3.new(1, 1, 1)
 
--- Ping Label (Có thể chỉnh vị trí riêng)
+-- Ping Label (Chỉ hiển thị số, không có hình tròn)
 pingLabel.Parent = screenGui
 pingLabel.Size = UDim2.new(0, 443, 0, 29)
-pingLabel.Position = UDim2.new(0, 50, 0, 80) -- Điều chỉnh vị trí Ping tại đây
+pingLabel.Position = UDim2.new(0, 50, 0, 80)
 pingLabel.Font = Enum.Font.FredokaOne
 pingLabel.TextScaled = true
 pingLabel.BackgroundTransparency = 1
-pingLabel.TextStrokeTransparency = 0
+pingLabel.TextStrokeTransparency = 0.3
 pingLabel.TextColor3 = Color3.new(1, 1, 1)
 
+-- Toggle Button
+toggleButton.Parent = screenGui
+toggleButton.Size = UDim2.new(0, 30, 0, 30)
+toggleButton.Position = UDim2.new(0, 10, 0, 10)
+toggleButton.BackgroundColor3 = Color3.new(0, 0, 0)
+toggleButton.TextColor3 = Color3.new(1, 1, 1)
+toggleButton.Font = Enum.Font.FredokaOne
+toggleButton.Text = "ON"
+toggleButton.TextScaled = true
+toggleButton.AutoButtonColor = true
+toggleButton.BorderSizePixel = 0
+toggleButton.BackgroundTransparency = 0.2
+
+toggleButton.MouseButton1Click:Connect(function()
+    isVisible = not isVisible
+    fpsLabel.Visible = isVisible
+    pingLabel.Visible = isVisible
+    toggleButton.Text = isVisible and "ON" or "OFF"
+end)
+
+local function getFpsIcon(fps)
+    if fps >= 15 then
+        return "🟢"
+    elseif fps >= 9 then
+        return "🔵"
+    elseif fps >= 4 then
+        return "🔴"
+    else
+        return "⚫"
+    end
+end
+
 local function rainbowColor()
-    local HuysHappi = 0
+    local hue = 0
     while true do
-        HuysHappi = HuysHappi + 0.01
-        if HuysHappi > 1 then HuysHappi = 0 end
-        fpsLabel.TextColor3 = Color3.fromHSV(HuysHappi, 1, 1)
-        pingLabel.TextColor3 = Color3.fromHSV(HuysHappi, 1, 1) -- Ping cũng đổi màu
+        hue = hue + 0.01
+        if hue > 1 then hue = 0 end
+        fpsLabel.TextColor3 = Color3.fromHSV(hue, 1, 1)
+        pingLabel.TextColor3 = Color3.fromHSV(hue, 1, 1)
         RunService.RenderStepped:Wait()
     end
 end
@@ -73,17 +109,15 @@ RunService.RenderStepped:Connect(function()
         frameCount = 0
         lastUpdate = now
 
-        -- Ẩn 4 ký tự đầu tiên của tên tài khoản
         local userName = LocalPlayer.Name
         local hiddenName = string.rep("*", 4) .. string.sub(userName, 5)
-
-        -- Lấy giá trị Ping
         local ping = Stats.Network and Stats.Network.ServerStatsItem and Stats.Network.ServerStatsItem["Data Ping"] and Stats.Network.ServerStatsItem["Data Ping"]:GetValue() or 0
 
-        -- Cập nhật văn bản
-        fpsLabel.Text = string.format("%s, FPS: %d", hiddenName, math.floor(fps))
-        pingLabel.Text = string.format("🎮 Ping: %dms", math.floor(ping))
+        local fpsIcon = getFpsIcon(math.floor(fps))
+        fpsLabel.Text = string.format("%s, FPS: %d %s", hiddenName, math.floor(fps), fpsIcon)
+        pingLabel.Text = string.format("🎮 Ping: %dms", math.floor(ping)) -- ❌ Không có hình tròn
     end
 end)
 
 spawn(rainbowColor)
+
