@@ -33,7 +33,7 @@ screenGui.DisplayOrder = 100
 -- FPS & Username Label
 fpsLabel.Parent = screenGui
 fpsLabel.Size = UDim2.new(0, 300, 0, 30)
-fpsLabel.Position = UDim2.new(0, 50, 0, 56) -- Điều chỉnh vị trí
+fpsLabel.Position = UDim2.new(0, 50, 0, 54) -- Điều chỉnh vị trí
 fpsLabel.Font = Enum.Font.FredokaOne
 fpsLabel.TextScaled = true
 fpsLabel.BackgroundTransparency = 1
