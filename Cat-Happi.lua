@@ -20,14 +20,12 @@ end)
 wait(.3)
 local RunService = game:GetService("RunService")
 local Players = game:GetService("Players")
-local LocalPlayer = Players.LocalPlayer
 local Stats = game:GetService("Stats")
 local UserInputService = game:GetService("UserInputService")
 
 local screenGui = Instance.new("ScreenGui")
 local fpsLabel = Instance.new("TextLabel")
 local pingLabel = Instance.new("TextLabel")
-local hopLabel = Instance.new("TextLabel")
 local toggleButton = Instance.new("TextButton")
 
 local isVisible = true
@@ -37,7 +35,7 @@ screenGui.DisplayOrder = 100
 
 -- FPS Label
 fpsLabel.Parent = screenGui
-fpsLabel.Size = UDim2.new(0, 300, 0, 30)
+fpsLabel.Size = UDim2.new(0, 453, 0, 30)
 fpsLabel.Position = UDim2.new(0, 72, 0, 56)
 fpsLabel.Font = Enum.Font.FredokaOne
 fpsLabel.TextScaled = true
@@ -54,16 +52,6 @@ pingLabel.TextScaled = true
 pingLabel.BackgroundTransparency = 1
 pingLabel.TextStrokeTransparency = 0.3
 pingLabel.TextColor3 = Color3.new(1, 1, 1)
-
--- Hop Label
-hopLabel.Parent = screenGui
-hopLabel.Size = UDim2.new(0, 300, 0, 28)  
-hopLabel.Position = UDim2.new(0, 135, 0, 105) 
-hopLabel.Font = Enum.Font.FredokaOne
-hopLabel.TextScaled = true
-hopLabel.BackgroundTransparency = 1
-hopLabel.TextStrokeTransparency = 0.3
-hopLabel.TextColor3 = Color3.new(1, 1, 1)
 
 -- Toggle Button
 toggleButton.Parent = screenGui
@@ -82,21 +70,8 @@ toggleButton.MouseButton1Click:Connect(function()
     isVisible = not isVisible
     fpsLabel.Visible = isVisible
     pingLabel.Visible = isVisible
-    hopLabel.Visible = isVisible
     toggleButton.Text = isVisible and "ON" or "OFF"
 end)
-
-local function getFpsIcon(fps)
-    if fps >= 15 then
-        return "🟢"
-    elseif fps >= 9 then
-        return "🔵"
-    elseif fps >= 4 then
-        return "🔴"
-    else
-        return "⚫"
-    end
-end
 
 local function rainbowColor()
     local hue = 0
@@ -105,7 +80,6 @@ local function rainbowColor()
         if hue > 1 then hue = 0 end
         fpsLabel.TextColor3 = Color3.fromHSV(hue, 1, 1)
         pingLabel.TextColor3 = Color3.fromHSV(hue, 1, 1)
-        hopLabel.TextColor3 = Color3.fromHSV(hue, 1, 1)
         RunService.RenderStepped:Wait()
     end
 end
@@ -125,17 +99,9 @@ RunService.RenderStepped:Connect(function()
 
         local ping = Stats.Network and Stats.Network.ServerStatsItem and Stats.Network.ServerStatsItem["Data Ping"] and Stats.Network.ServerStatsItem["Data Ping"]:GetValue() or 0
         
-        local fpsIcon = getFpsIcon(math.floor(fps))
-        fpsLabel.Text = string.format("%s, FPS: %d %s", LocalPlayer.Name, math.floor(fps), fpsIcon)
+        fpsLabel.Text = string.format("FPS: %d", math.floor(fps))
         pingLabel.Text = string.format("🎮 Ping: %dms", math.floor(ping))
     end
 end)
-
--- Xử lý số lần hop server
-getgenv().HopCounts = getgenv().HopCounts or {}
-local userId = LocalPlayer.UserId
-getgenv().HopCounts[userId] = (getgenv().HopCounts[userId] or 0) + 1
-
-hopLabel.Text = "CountHop: " .. getgenv().HopCounts[userId]
 
 spawn(rainbowColor)
