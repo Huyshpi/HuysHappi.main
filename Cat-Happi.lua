@@ -1,84 +1,25 @@
-local Workspace = game:GetService("Workspace")
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local Lighting = game:GetService("Lighting")
-local Players = game:GetService("Players")
-local CoreGui = game:GetService("CoreGui")
-
--- Hàm làm trong suốt đối tượng (xóa map)
-local function makeTransparent(instance)
+for i,v in next, workspace:GetDescendants() do
     pcall(function()
-        -- Không làm trong suốt nhân vật người chơi
-        if instance:IsA("BasePart") and instance ~= Players.LocalPlayer.Character then
-            instance.Transparency = 1
-            instance.CanCollide = false -- Tắt va chạm để không cản đường
+        v.Transparency = 1
+    end)
+end
+for i,v in next, getnilinstances() do
+    pcall(function()
+        v.Transparency = 1
+        for i1,v1 in next, v:GetDescendants() do
+            v1.Transparency = 1
         end
     end)
 end
-
--- Hàm tắt âm thanh
-local function muteSound(instance)
+a = workspace
+a.DescendantAdded:Connect(function(v)
     pcall(function()
-        if instance:IsA("Sound") then
-            instance.Volume = 0 -- Tắt âm lượng
-            instance:Stop() -- Dừng phát
-        end
+        v.Transparency = 1
     end)
-end
-
--- Hàm vô hiệu hóa hiệu ứng Leviathan
-local function disableLeviathanEffect(instance)
-    pcall(function()
-        -- Kiểm tra nếu đối tượng liên quan đến Leviathan hoặc Frozen Dimension
-        local isLeviathanRelated = instance.Name:lower():match("leviathan") or instance.Name:lower():match("frozen")
-        if isLeviathanRelated then
-            if instance:IsA("ParticleEmitter") or instance:IsA("Beam") or instance:IsA("PointLight") or instance:IsA("Trail") then
-                instance.Enabled = false -- Tắt hiệu ứng
-            elseif instance:IsA("BasePart") then
-                instance.Transparency = 1 -- Làm trong suốt
-                instance.CanCollide = false -- Tắt va chạm
-            end
-        end
-    end)
-end
-
--- Xóa map (làm trong suốt các đối tượng hiện tại trong Workspace)
-for _, v in ipairs(Workspace:GetDescendants()) do
-    makeTransparent(v)
-    disableLeviathanEffect(v) -- Kết hợp xử lý hiệu ứng Leviathan
-end
-
--- Tắt âm thanh hiện tại
-for _, service in ipairs({Workspace, ReplicatedStorage, Lighting, CoreGui}) do
-    for _, v in ipairs(service:GetDescendants()) do
-        muteSound(v)
-    end
-end
-
--- Xử lý getnilinstances (nếu cần, lưu ý rủi ro exploit)
-for _, v in ipairs(getnilinstances()) do
-    makeTransparent(v)
-    muteSound(v)
-    disableLeviathanEffect(v)
-    for _, v1 in ipairs(v:GetDescendants()) do
-        makeTransparent(v1)
-        muteSound(v1)
-        disableLeviathanEffect(v1)
-    end
-end
-
--- Giám sát các đối tượng mới
-Workspace.DescendantAdded:Connect(function(v)
-    makeTransparent(v)
-    disableLeviathanEffect(v)
 end)
-
--- Giám sát âm thanh mới
-for _, service in ipairs({Workspace, ReplicatedStorage, Lighting, CoreGui}) do
-    service.DescendantAdded:Connect(muteSound)
-end
+wait(.3)
 local RunService = game:GetService("RunService")
 local Stats = game:GetService("Stats")
-
 -- GUI cha
 local screenGui = Instance.new("ScreenGui")
 screenGui.IgnoreGuiInset = true
