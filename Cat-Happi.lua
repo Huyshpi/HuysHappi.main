@@ -20,6 +20,7 @@ end)
 wait(.3)
 local RunService = game:GetService("RunService")
 local Stats = game:GetService("Stats")
+
 -- GUI cha
 local screenGui = Instance.new("ScreenGui")
 screenGui.IgnoreGuiInset = true
@@ -46,11 +47,11 @@ local fpsLabel = createLabel("FPS: ?", UDim2.new(0, 308, 0, 31), UDim2.new(0.5, 
 local dividerLabel = createLabel("|", UDim2.new(0, 86, 0, 33), UDim2.new(0.5, -40, 0, 14)) 
 local pingLabel = createLabel("Ping: ?", UDim2.new(0, 208, 0, 31), UDim2.new(0.5, 10, 0, 16)) 
 
--- Tạo nút toggle với hình con mèo
+-- Tạo nút toggle bên trái
 local toggleButton = Instance.new("ImageButton")
 toggleButton.Parent = screenGui
 toggleButton.Size = UDim2.new(0, 50, 0, 50)
-toggleButton.Position = UDim2.new(0, 700, 0, 10)
+toggleButton.Position = UDim2.new(1, -110, 0, 10) -- Vị trí nút trái
 toggleButton.BackgroundTransparency = 1
 toggleButton.Image = "rbxassetid://119806198049474"
 toggleButton.BorderSizePixel = 0
@@ -77,7 +78,7 @@ local function rainbowColor()
         if hue > 1 then hue = 0 end
         local color = Color3.fromHSV(hue, 1, 1)
         fpsLabel.TextColor3 = color
-        pingLabel.TextColor3 = color -- Áp dụng cho Ping
+        pingLabel.TextColor3 = color
         RunService.RenderStepped:Wait()
     end
 end
@@ -101,6 +102,9 @@ RunService.RenderStepped:Connect(function()
         pingLabel.Text = string.format("Ping: %d ms", math.floor(ping))
     end
 end)
+
+-- Bắt đầu hiệu ứng cầu vồng
+spawn(rainbowColor)
 
 -- Bắt đầu hiệu ứng cầu vồng
 spawn(rainbowColor)
