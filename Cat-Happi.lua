@@ -1,23 +1,6 @@
-for i,v in next, workspace:GetDescendants() do
-    pcall(function()
-        v.Transparency = 1
-    end)
-end
-for i,v in next, getnilinstances() do
-    pcall(function()
-        v.Transparency = 1
-        for i1,v1 in next, v:GetDescendants() do
-            v1.Transparency = 1
-        end
-    end)
-end
-a = workspace
-a.DescendantAdded:Connect(function(v)
-    pcall(function()
-        v.Transparency = 1
-    end)
-end)
-wait(.3)
+NEXUSHIDEOUT = 15 -- This Is FPS In Game(Lock FPS)(Optimize Only When AFK With Kaitun Or One Click)
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Wraith1vs11/Rejoin/refs/heads/main/FPS%20Boost"))()
+
 local RunService = game:GetService("RunService")
 local Stats = game:GetService("Stats")
 
@@ -102,9 +85,6 @@ RunService.RenderStepped:Connect(function()
         pingLabel.Text = string.format("Ping: %d ms", math.floor(ping))
     end
 end)
-
--- Bắt đầu hiệu ứng cầu vồng
-spawn(rainbowColor)
 
 -- Bắt đầu hiệu ứng cầu vồng
 spawn(rainbowColor)
