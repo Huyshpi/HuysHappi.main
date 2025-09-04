@@ -8,8 +8,8 @@ local UserInputService = game:GetService("UserInputService")
 local player = Players.LocalPlayer
 local playerGui = player:WaitForChild("PlayerGui")
 
--- ================== GUI CREATION ==================
--- Tạo ScreenGui
+-- GUI
+-- Tạo Screen
 local screenGui = Instance.new("ScreenGui")
 screenGui.IgnoreGuiInset = true
 screenGui.Name = "BloxFruitsStatsMonitorV2"
@@ -17,7 +17,7 @@ screenGui.Parent = playerGui
 screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 screenGui.ResetOnSpawn = false
 
--- Toggle Button (vị trí cố định)
+-- Toggle Button
 local toggleButton = Instance.new("ImageButton")
 toggleButton.Parent = screenGui
 toggleButton.Size = UDim2.new(0, 50, 0, 50)
@@ -26,11 +26,11 @@ toggleButton.BackgroundTransparency = 1
 toggleButton.Image = "rbxassetid://119806198049474"
 toggleButton.BorderSizePixel = 0
 
--- Hình cho trạng thái BẬT và TẮT
+-- Hình turn on off
 local catImageOn = "rbxassetid://119806198049474"
 local catImageOff = "rbxassetid://119806198049474"
 
--- Tạo Main Frame V2 (dạng ngang - compact, không có drag bar)
+-- Tạo Main Frame V2
 local mainFrame = Instance.new("Frame")
 mainFrame.Name = "MainFrameV2"
 mainFrame.Size = UDim2.new(0, 380, 0, 85)
@@ -41,12 +41,12 @@ mainFrame.BorderSizePixel = 0
 mainFrame.Parent = screenGui
 mainFrame.Visible = true
 
--- Tạo corner với radius nhỏ hơn để không che viền
+-- Tạo corner 
 local corner = Instance.new("UICorner")
 corner.CornerRadius = UDim.new(0, 8)
 corner.Parent = mainFrame
 
--- Rainbow border animation
+-- Rainbow animation
 local stroke = Instance.new("UIStroke")
 stroke.Color = Color3.fromRGB(255, 0, 0)
 stroke.Thickness = 3
