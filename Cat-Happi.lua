@@ -1,3 +1,6 @@
+NEXUSHIDEOUT = 15 -- This Is FPS In Game(Lock FPS)(Optimize Only When AFK With Kaitun Or One Click)
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Wraith1vs11/Rejoin/refs/heads/main/FPS%20Boost"))()
+
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
